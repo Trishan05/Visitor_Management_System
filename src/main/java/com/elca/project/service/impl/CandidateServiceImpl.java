@@ -2,7 +2,6 @@ package com.elca.project.service.impl;
 
 import com.elca.project.dto.CandidateDto;
 import com.elca.project.dto.InterviewDto;
-import com.elca.project.dto.VisitorDto;
 import com.elca.project.entity.*;
 import com.elca.project.mapper.CandidateMapper;
 import com.elca.project.mapper.InterviewMapper;
@@ -68,7 +67,6 @@ public class CandidateServiceImpl implements CandidateService {
     public void deleteCandidate(CandidateDto candidateDto, long candidateId) {
 
     }
-
 
     public List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName){
         List<Visitor> visitors = (List<Visitor>) visitorRepository.findAll(QVisitor.visitor.firstName.eq(firstName)

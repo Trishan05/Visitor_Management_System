@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -16,8 +17,12 @@ import javax.persistence.*;
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @NotNull
     @Column(name="badge_id")
     private Long badgeId;
+
+    @NotNull
     @Column
     private String status;
 }

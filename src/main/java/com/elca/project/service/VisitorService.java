@@ -1,6 +1,5 @@
 package com.elca.project.service;
 
-import com.elca.project.dto.BadgeDto;
 import com.elca.project.dto.VisitorDto;
 import com.elca.project.entity.Visitor;
 

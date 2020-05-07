@@ -60,7 +60,6 @@ public class BadgeServiceImpl implements BadgeService {
         badgeRepository.save(badgeMapper.badgeDtoToEntity(badgeEntity));
     }
 
-
     @Override
     public void deleteBadge(BadgeDto badgeDto, long badgeId) {
 

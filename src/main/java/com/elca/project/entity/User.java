@@ -1,9 +1,9 @@
 package com.elca.project.entity;
 
-
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -18,9 +18,11 @@ public class User {
     @Column(name="user_id")
     private Long userId;
 
+    @NotNull
     @Column(name="username")
     private String userName;
 
+    @NotNull
     @Column(name="password")
     private String password;
 

@@ -9,7 +9,6 @@ import com.elca.project.service.VisitorService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/visitors")
 public class VisitorController {
     VisitorService visitorService;
@@ -39,7 +38,7 @@ public class VisitorController {
         return new ResponseEntity<>(visitorService.getVisitorById(visitorId), HttpStatus.OK);
     }
 
-    @GetMapping("/visitor")
+    @GetMapping("/specific")
     public ResponseEntity<List<VisitorDto>> getVisitorByFirstnameAndLastname(@RequestParam(name = "fname") String firstName, @RequestParam(name="lname") String lastName){
         return new ResponseEntity<>(visitorService.getVisitorByFirstnameAndLastname(firstName, lastName), HttpStatus.OK);
     }

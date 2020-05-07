@@ -68,9 +68,7 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void deleteVisit(VisitDto visitDto, long visitId) {
-
     }
-
 
     //get between 2 dates
     @Override
@@ -82,5 +80,4 @@ public class VisitServiceImpl implements VisitService {
         }).collect(Collectors.toList());
         return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
     }
-
 }

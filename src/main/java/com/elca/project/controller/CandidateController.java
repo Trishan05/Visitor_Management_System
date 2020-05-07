@@ -2,7 +2,6 @@ package com.elca.project.controller;
 
 import com.elca.project.dto.CandidateDto;
 import com.elca.project.dto.InterviewDto;
-import com.elca.project.dto.VisitorDto;
 import com.elca.project.service.CandidateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/candidates")
 public class CandidateController {
     CandidateService candidateService;

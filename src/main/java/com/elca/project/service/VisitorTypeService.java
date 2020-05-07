@@ -1,6 +1,5 @@
 package com.elca.project.service;
 
-
 import com.elca.project.dto.VisitorTypeDto;
 
 import java.util.List;

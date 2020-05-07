@@ -34,7 +34,6 @@ public class Visit {
     @Column(name="time_in")
     private LocalTime timeIn;
 
-
     @JsonFormat(pattern = "HH.mm", shape = JsonFormat.Shape.STRING)
     @Column(name="time_out")
     @Nullable

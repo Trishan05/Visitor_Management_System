@@ -30,6 +30,7 @@ public class Visitor {
     @Column
     private String email;
 
+    @Nullable
     @Column(name="phone_no")
     private Long phoneNo;
 
