@@ -1,6 +1,8 @@
 package com.elca.project.controller;
 
 import com.elca.project.dto.CandidateDto;
+import com.elca.project.dto.InterviewDto;
+import com.elca.project.dto.VisitorDto;
 import com.elca.project.service.CandidateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +42,8 @@ public class CandidateController {
         return new ResponseEntity<>(candidateService.getCandidateById(candidateId), HttpStatus.OK);
     }
 
-//    @GetMapping("/{status}")
-//    public ResponseEntity<CandidateDto> getCandidateByStatus(@PathVariable(value = "Active") String status) {
-//        candidateService.getCandidateByStatus(status).orElseThrow(IllegalArgumentException::notify);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//
-//    }
+    @GetMapping("/name")
+    public ResponseEntity<List<InterviewDto>> getInterviewByCandidateFirstNameAndLastName(@RequestParam(name = "fname") String firstName, @RequestParam(name="lname") String lastName){
+        return new ResponseEntity<>(candidateService.getInterviewByCandidateFirstNameAndLastName(firstName, lastName), HttpStatus.OK);
+    }
 }

@@ -2,6 +2,8 @@ package com.elca.project.service.impl;
 
 import com.elca.project.entity.*;
 import com.elca.project.mapper.VisitorMapper;
+import com.elca.project.repository.CandidateRepository;
+import com.elca.project.repository.InterviewRepository;
 import com.elca.project.repository.VisitRepository;
 import com.elca.project.repository.VisitorRepository;
 import com.elca.project.dto.VisitorDto;
@@ -17,11 +19,15 @@ public class VisitorServiceImpl implements VisitorService {
     final private VisitorRepository visitorRepository;
     final private VisitRepository visitRepository;
     final private VisitorMapper visitorMapper;
+    final private InterviewRepository interviewRepository;
+    final private CandidateRepository candidateRepository;
 
-    public VisitorServiceImpl(VisitorRepository visitorRepository, VisitRepository visitRepository, VisitorMapper visitorMapper) {
+    public VisitorServiceImpl(VisitorRepository visitorRepository, VisitRepository visitRepository, VisitorMapper visitorMapper, InterviewRepository interviewRepository, CandidateRepository candidateRepository) {
         this.visitorRepository = visitorRepository;
         this.visitRepository = visitRepository;
         this.visitorMapper = visitorMapper;
+        this.interviewRepository = interviewRepository;
+        this.candidateRepository = candidateRepository;
     }
 
     //get by Id
@@ -38,7 +44,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public List<VisitorDto> getVisitorByFirstnameAndLastname(String firstName, String lastName) {
         List<Visitor> getVisitorByFirstnameAndLastname = (List<Visitor>) visitorRepository.findAll(QVisitor.visitor.firstName.eq(firstName)
-        .and(QVisitor.visitor.lastName.eq(lastName)));
+                .and(QVisitor.visitor.lastName.eq(lastName)));
         return getVisitorByFirstnameAndLastname.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
     }
 
@@ -51,6 +57,16 @@ public class VisitorServiceImpl implements VisitorService {
             return visitorRepository.findOne(QVisitor.visitor.visitorId.eq(vst.getVisitor().getVisitorId())).orElse(null);
         }).collect(Collectors.toList());
         return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VisitorDto> getVisitorByCandidateAndStatus() {
+        List<Interview> interviews = (List<Interview>) interviewRepository.findAll(QInterview.interview.status.eq("Active"));
+        return interviews.stream().map(ivt -> {
+            Candidate candidate = candidateRepository
+                    .findById(ivt.getCandidate().getCandidateId()).orElse(null);
+            return candidate.getVisitor();
+        }).map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
     }
 
 

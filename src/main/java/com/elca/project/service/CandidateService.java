@@ -1,6 +1,7 @@
 package com.elca.project.service;
 
 import com.elca.project.dto.CandidateDto;
+import com.elca.project.dto.InterviewDto;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface CandidateService {
     void saveCandidate(CandidateDto candidateDto);
     void updateCandidate(CandidateDto candidateDto);
     void deleteCandidate(CandidateDto candidateDto, long candidateId);
-    List<CandidateDto> getCandidateByStatus();
+    List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName);
 }

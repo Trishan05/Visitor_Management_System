@@ -1,13 +1,14 @@
 package com.elca.project.service.impl;
 
 import com.elca.project.dto.CandidateDto;
-import com.elca.project.entity.Candidate;
-import com.elca.project.entity.Interview;
-import com.elca.project.entity.QInterview;
+import com.elca.project.dto.InterviewDto;
+import com.elca.project.dto.VisitorDto;
+import com.elca.project.entity.*;
 import com.elca.project.mapper.CandidateMapper;
 import com.elca.project.mapper.InterviewMapper;
 import com.elca.project.repository.CandidateRepository;
 import com.elca.project.repository.InterviewRepository;
+import com.elca.project.repository.VisitorRepository;
 import com.elca.project.service.CandidateService;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,13 @@ public class CandidateServiceImpl implements CandidateService {
     final private CandidateMapper candidateMapper;
     final private InterviewMapper interviewMapper;
     final private InterviewRepository interviewRepository;
-
-    public CandidateServiceImpl(CandidateRepository candidateRepository, CandidateMapper candidateMapper, InterviewMapper interviewMapper, InterviewRepository interviewRepository) {
+    private final VisitorRepository visitorRepository;
+    public CandidateServiceImpl(CandidateRepository candidateRepository, CandidateMapper candidateMapper, InterviewMapper interviewMapper, InterviewRepository interviewRepository, VisitorRepository visitorRepository) {
         this.candidateRepository = candidateRepository;
         this.candidateMapper = candidateMapper;
         this.interviewMapper = interviewMapper;
         this.interviewRepository = interviewRepository;
+        this.visitorRepository = visitorRepository;
     }
 
     //get by Id
@@ -67,18 +69,20 @@ public class CandidateServiceImpl implements CandidateService {
 
     }
 
-    @Override
-    public List<CandidateDto> getCandidateByStatus() {
 
-        List<Interview> interview = (List<Interview>) interviewRepository.findAll(QInterview.interview.status.eq("Active"));
-        List<Candidate> candidates = interview.stream().map(ivt -> {
-            return candidateRepository.findById(ivt.getCandidate().getCandidateId()).orElse(null);
+    public List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName){
+        List<Visitor> visitors = (List<Visitor>) visitorRepository.findAll(QVisitor.visitor.firstName.eq(firstName)
+        .and(QVisitor.visitor.lastName.eq(lastName)));
+
+        List<Long> candidates = visitors.stream().map(vst -> {
+            Candidate cdt = candidateRepository.findOne(QCandidate.candidate.visitor.visitorId.eq(vst.getVisitorId())).orElse(null);
+            return cdt.getCandidateId();
         }).collect(Collectors.toList());
 
-        return candidates.stream().map(candidate -> {
-            return candidateMapper.candidateEntityToDto(candidate);
-        }).collect(Collectors.toList());
+        return candidates.stream().map(candidateId -> {
+            return interviewRepository.findOne(QInterview.interview.candidate.candidateId.eq(candidateId)).orElse(null);
+        }).map(interviewMapper::interviewEntityToDto).collect(Collectors.toList());
     }
 
-
 }
+

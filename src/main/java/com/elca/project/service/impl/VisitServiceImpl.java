@@ -71,6 +71,8 @@ public class VisitServiceImpl implements VisitService {
 
     }
 
+
+    //get between 2 dates
     @Override
     public List<VisitorDto> findBetweenDates(LocalDate fromDate, LocalDate toDate) {
         List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.date.between(fromDate, toDate));

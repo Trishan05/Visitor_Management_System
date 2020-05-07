@@ -15,5 +15,6 @@ public interface VisitorService {
     List<VisitorDto> getVisitorByFirstnameAndLastname(String firstName, String lastName);
     List<VisitorDto> getVisitorByCandidate();
     List<VisitorDto> getVisitorByBatchStatus();
+    List<VisitorDto> getVisitorByCandidateAndStatus();
 
 }

@@ -44,7 +44,7 @@ public class VisitorController {
         return new ResponseEntity<>(visitorService.getVisitorByFirstnameAndLastname(firstName, lastName), HttpStatus.OK);
     }
 
-    @GetMapping("/candidate/active")
+    @GetMapping("/candidate")
     public ResponseEntity<List<VisitorDto>> getVisitorByCandidate(){
         return new ResponseEntity<>(visitorService.getVisitorByCandidate(), HttpStatus.OK);
     }
@@ -52,6 +52,11 @@ public class VisitorController {
     @GetMapping("/status/active")
     public ResponseEntity<List<VisitorDto>> getVisitorByBatchStatus(){
         return new ResponseEntity<>(visitorService.getVisitorByBatchStatus(), HttpStatus.OK);
+    }
+
+    @GetMapping("/candidate/active")
+    public ResponseEntity<List<VisitorDto>> getVisitorByCandidateAndStatus(){
+        return new ResponseEntity<>(visitorService.getVisitorByCandidateAndStatus(),HttpStatus.OK);
     }
 
 //
