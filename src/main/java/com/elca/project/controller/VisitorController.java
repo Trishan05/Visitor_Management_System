@@ -58,35 +58,4 @@ public class VisitorController {
         return new ResponseEntity<>(visitorService.getVisitorByCandidateAndStatus(),HttpStatus.OK);
     }
 
-//
-//    @GetMapping("/export")
-//    public ResponseEntity<DownloadDto> getExcel() throws CandidateNotFoundException {
-//    CandidatePaginationDto candidatePaginationDto = candidateService.findAllCandidate(PageRequest.of(0, 1000));
-//    List<ExcelDto> excelDtos = new ArrayList<>();
-//    List<CandidateDto> candidateDtos = candidatePaginationDto.getCandidateDtoList();
-//    candidateDtos.forEach(candidateDto -> {
-//        candidateDto.getCandidateVenueJobSaveDto().forEach(candidateVenueJobSaveDto -> {
-//            VenueJobDto venueJobDto = null;
-//            try {
-//                venueJobDto = venueJobService.findVenueJobById(candidateVenueJobSaveDto.getVenueJobId());
-//            } catch (VenueJobNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            String venueName = venueJobDto.getVenue().getVenueName();
-//            excelDtos.add(new ExcelDto(candidateDto.getRegistrationDate(), candidateDto.getFirstName(), candidateDto.getLastName(), venueName));
-//        });
-//    });
-//
-//    var file = ExcelReportView.buildExcelDocument(excelDtos);
-//    DownloadDto downloadDto = null;
-//    try {
-//        downloadDto = DownloadDto.builder().file(Files.readAllBytes(file.toPath())).name("candidates.xls").build();
-//    } catch (IOException e) {
-//        //log
-//    }
-//
-//    return ResponseEntity.ok(downloadDto);
-//    }
-
-
 }

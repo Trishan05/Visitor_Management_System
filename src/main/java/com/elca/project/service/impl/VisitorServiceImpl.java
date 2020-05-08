@@ -114,17 +114,4 @@ public class VisitorServiceImpl implements VisitorService {
 
     }
 
-
-//    @Override
-//    public List<CandidateDto> getCandidateByStatus() {
-//        List<Interview> interview = (List<Interview>) interviewRepository.findAll(QInterview.interview.status.eq("Active"));
-//        List<Candidate> candidates = interview.stream().map(ivt -> {
-//            return candidateRepository.findById(ivt.getCandidate().getCandidateId()).orElse(null);
-//        }).collect(Collectors.toList());
-//
-//        return candidates.stream().map(candidate -> {
-//            return candidateMapper.candidateEntityToDto(candidate);
-//        }).collect(Collectors.toList());
-//    }
-
 }
