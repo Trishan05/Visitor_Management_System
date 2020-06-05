@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         UserDto userEntity = getUserById(userDto.getUserId());
 
         userEntity.setUserId(userDto.getUserId());
-        userEntity.setUserName(userDto.getUserName());
+        userEntity.setUsername(userDto.getUsername());
         userEntity.setPassword(userDto.getPassword());
         userRepository.save(userMapper.userDtoToEntity(userEntity));
     }

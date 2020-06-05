@@ -1,14 +1,11 @@
 package com.elca.project.entity;
 
 import com.sun.istack.Nullable;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+@ToString
 @Entity
 @Data
 @Builder

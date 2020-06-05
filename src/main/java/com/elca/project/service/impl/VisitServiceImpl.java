@@ -11,6 +11,10 @@ import com.elca.project.mapper.VisitorMapper;
 import com.elca.project.repository.VisitRepository;
 import com.elca.project.repository.VisitorRepository;
 import com.elca.project.service.VisitService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,9 +46,12 @@ public class VisitServiceImpl implements VisitService {
 
     //getting all visit
     @Override
-    public List<VisitDto> getAllVisits() {
-        List<Visit> visits = visitRepository.findAll();
-        return visits.stream().map(visitMapper::visitEntityToDto).collect(Collectors.toList());
+    public List<VisitDto> getAllVisits(Integer pageNo, Integer pageSize, String sortBy){
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+            Page<Visit> pageResult = visitRepository.findAll(paging);
+
+        return pageResult.stream().map(visitMapper::visitEntityToDto).collect(Collectors.toList());
     }
 
     //inserting visit
@@ -70,14 +77,12 @@ public class VisitServiceImpl implements VisitService {
     public void deleteVisit(VisitDto visitDto, long visitId) {
     }
 
-    //get between 2 dates
     @Override
-    public List<VisitorDto> findBetweenDates(LocalDate fromDate, LocalDate toDate) {
+    public List<VisitDto> findBetweenDates(LocalDate fromDate, LocalDate toDate) {
         List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.date.between(fromDate, toDate));
-
-        List<Visitor> visitors = visit.stream().map(vt ->{
-            return visitorRepository.findOne(QVisitor.visitor.visitorId.eq(vt.getVisitor().getVisitorId())).orElse(null);
-        }).collect(Collectors.toList());
-        return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+        return visit.stream().map(visitMapper::visitEntityToDto).collect(Collectors.toList());
     }
+
+    //get between 2 dates
+
 }

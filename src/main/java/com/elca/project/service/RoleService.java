@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface RoleService {
     RoleDto getRoleById(long roleId);
+
     List<RoleDto> getAllRoles();
+
     void saveRole(RoleDto roleDto);
+
     void updateRole(RoleDto roleDto);
+
     void deleteRole(RoleDto roleDto, long roleId);
 }

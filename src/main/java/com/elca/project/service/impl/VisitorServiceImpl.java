@@ -1,5 +1,6 @@
 package com.elca.project.service.impl;
 
+import com.elca.project.dto.VisitDto;
 import com.elca.project.entity.*;
 import com.elca.project.mapper.VisitorMapper;
 import com.elca.project.repository.CandidateRepository;
@@ -7,9 +8,15 @@ import com.elca.project.repository.InterviewRepository;
 import com.elca.project.repository.VisitRepository;
 import com.elca.project.repository.VisitorRepository;
 import com.elca.project.dto.VisitorDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.elca.project.service.VisitorService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +47,7 @@ public class VisitorServiceImpl implements VisitorService {
     }
 
 
+
     //get visitor by first and last name
     @Override
     public List<VisitorDto> getVisitorByFirstnameAndLastname(String firstName, String lastName) {
@@ -51,8 +59,8 @@ public class VisitorServiceImpl implements VisitorService {
 
     //get visitor by visitortype name (candidate)
     @Override
-    public List<VisitorDto> getVisitorByCandidate() {
-        List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.visitorType.name.eq("Candidate"));
+    public List<VisitorDto> getVisitorByVisitorType(String name) {
+        List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.visitorType.name.eq(name));
         List<Visitor> visitors = visit.stream().map(vst -> {
             return visitorRepository.findOne(QVisitor.visitor.visitorId.eq(vst.getVisitor().getVisitorId())).orElse(null);
         }).collect(Collectors.toList());
@@ -60,7 +68,18 @@ public class VisitorServiceImpl implements VisitorService {
     }
 
     @Override
-    public List<VisitorDto> getVisitorByCandidateAndStatus() {
+    public List<VisitorDto> getVisitorByCandidateAndStatus(String status) {
+        List<Interview> interviews = (List<Interview>) interviewRepository.findAll(QInterview.interview.status.eq(status));
+        return interviews.stream().map(ivt -> {
+            Candidate candidate = candidateRepository
+                    .findById(ivt.getCandidate().getCandidateId()).orElse(null);
+            return candidate.getVisitor();
+        }).map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<VisitorDto> getVisitorByActiveCandidate(String status) {
         List<Interview> interviews = (List<Interview>) interviewRepository.findAll(QInterview.interview.status.eq("Active"));
         return interviews.stream().map(ivt -> {
             Candidate candidate = candidateRepository
@@ -70,23 +89,25 @@ public class VisitorServiceImpl implements VisitorService {
     }
 
 
-    //get visitor by batchstatus (active)
+    //get visitor by badge status
     @Override
-    public List<VisitorDto> getVisitorByBatchStatus() {
-        List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.badge.status.eq("Active"));
-        List<Visitor> visitors = visit.stream().map(vst -> {
-            return visitorRepository.findOne(QVisitor.visitor.visitorId.eq(vst.getVisitor().getVisitorId())).orElse(null);
-        }).collect(Collectors.toList());
-        return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+    public List<VisitorDto> getVisitorByBadgeStatus(String status) {
+        List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.badge.status.eq(status));
+        return visit.stream().map(visit1 -> visitorMapper.visitorEntityToDto(visit1.getVisitor())).collect(Collectors.toList());
     }
 
 
     //getting all visitor
     @Override
-    public List<VisitorDto> getAllVisitors() {
-        List<Visitor> visitors = visitorRepository.findAll();
-        return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+    public List<VisitorDto> getAllVisitors(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        Page<Visitor> pageResult = visitorRepository.findAll(paging);
+
+        return pageResult.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
     }
+
 
     //inserting visitor
     @Override
@@ -113,5 +134,15 @@ public class VisitorServiceImpl implements VisitorService {
     public void deleteVisitor(VisitorDto visitorDto, long visitorId) {
 
     }
+
+//    @Override
+//    public List<VisitorDto> findBetweenDates(LocalDate fromDate, LocalDate toDate) {
+//        List<Visit> visit = (List<Visit>) visitRepository.findAll(QVisit.visit.date.between(fromDate, toDate));
+//
+//        List<Visitor> visitors = visit.stream().map(vt ->
+//            visitorRepository.findOne(QVisitor.visitor.visitorId.eq(vt.getVisitor().getVisitorId())).orElse(null)
+//        ).collect(Collectors.toList());
+//        return visitors.stream().map(visitorMapper::visitorEntityToDto).collect(Collectors.toList());
+//    }
 
 }

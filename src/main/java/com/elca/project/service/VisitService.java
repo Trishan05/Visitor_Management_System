@@ -7,11 +7,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface VisitService {
-    List<VisitDto> getAllVisits();
+    List<VisitDto> getAllVisits(Integer pageNo, Integer pageSize, String sortBy);
+
     VisitDto getVisitById(long visitId);
+
     void saveVisit(VisitDto visitDto);
+
     void updateVisit(VisitDto visitDto);
+
     void deleteVisit(VisitDto visitDto, long visitId);
-    List<VisitorDto> findBetweenDates(LocalDate fromDate, LocalDate toDate);
+
+    List<VisitDto> findBetweenDates(LocalDate fromDate, LocalDate toDate);
 
 }

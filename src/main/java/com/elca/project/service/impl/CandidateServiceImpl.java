@@ -12,6 +12,7 @@ import com.elca.project.service.CandidateService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -73,14 +74,13 @@ public class CandidateServiceImpl implements CandidateService {
         .and(QVisitor.visitor.lastName.eq(lastName)));
 
         List<Long> candidates = visitors.stream().map(vst -> {
-            Candidate cdt = candidateRepository.findOne(QCandidate.candidate.visitor.visitorId.eq(vst.getVisitorId())).orElse(null);
-            return cdt.getCandidateId();
-        }).collect(Collectors.toList());
+            Optional<Candidate> cdt = candidateRepository.findOne(QCandidate.candidate.visitor.visitorId.eq(vst.getVisitorId()));
+            return cdt.map(Candidate::getCandidateId).orElse(null);
+        }).filter(Objects::isNull).collect(Collectors.toList());
 
         return candidates.stream().map(candidateId -> {
             return interviewRepository.findOne(QInterview.interview.candidate.candidateId.eq(candidateId)).orElse(null);
         }).map(interviewMapper::interviewEntityToDto).collect(Collectors.toList());
     }
-
 }
 

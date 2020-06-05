@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface VisitorTypeService {
     List<VisitorTypeDto> getAllVisitorTypes();
+
     VisitorTypeDto getVisitorTypeById(long visitorTypeId);
+
     void saveVisitorType(VisitorTypeDto visitorTypeDto);
+
     void updateVisitorType(VisitorTypeDto visitorTypeDto);
 }

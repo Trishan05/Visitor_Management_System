@@ -20,7 +20,7 @@ public class User {
 
     @NotNull
     @Column(name="username")
-    private String userName;
+    private String username;
 
     @NotNull
     @Column(name="password")

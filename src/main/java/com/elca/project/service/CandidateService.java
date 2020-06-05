@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface CandidateService {
     CandidateDto getCandidateById (long candidateId);
+
     List<CandidateDto> getAllCandidates();
+
     void saveCandidate(CandidateDto candidateDto);
+
     void updateCandidate(CandidateDto candidateDto);
+
     void deleteCandidate(CandidateDto candidateDto, long candidateId);
+
     List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName);
 }

@@ -6,9 +6,14 @@ import java.util.List;
 
 public interface BadgeService {
     BadgeDto getBadgeById (long badgeId);
+
     List<BadgeDto> getAllBadges();
+
     void saveBadge(BadgeDto badgeDto);
+
     void updateBadge(BadgeDto badgeDto);
+
     void deleteBadge(BadgeDto badgeDto, long badgeId);
+
     List<BadgeDto> getBadgeByStatus(String status);
 }
