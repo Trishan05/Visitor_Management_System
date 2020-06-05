@@ -1,11 +1,8 @@
 package com.elca.project.service.impl;
 
 import com.elca.project.dto.VisitDto;
-import com.elca.project.dto.VisitorDto;
 import com.elca.project.entity.QVisit;
-import com.elca.project.entity.QVisitor;
 import com.elca.project.entity.Visit;
-import com.elca.project.entity.Visitor;
 import com.elca.project.mapper.VisitMapper;
 import com.elca.project.mapper.VisitorMapper;
 import com.elca.project.repository.VisitRepository;

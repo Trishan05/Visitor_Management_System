@@ -1,8 +1,6 @@
 package com.elca.project.service.impl;
 
-import com.elca.project.dto.RoleDto;
 import com.elca.project.dto.UserDto;
-import com.elca.project.entity.Role;
 import com.elca.project.entity.User;
 import com.elca.project.mapper.UserMapper;
 import com.elca.project.repository.RoleRepository;
@@ -15,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,13 +39,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 List.of(grantedAuthority));
     }
-
-//    public User save(UserDto user) {
-//        User newUser = new User();
-//        newUser.setUsername(user.getUsername());
-//        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-//        return userRepository.save(newUser);
-//    }
 
     public User save(UserDto userDto) {
         User newUser = userMapper.userDtoToEntity(userDto);

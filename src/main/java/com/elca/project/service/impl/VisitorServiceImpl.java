@@ -1,6 +1,5 @@
 package com.elca.project.service.impl;
 
-import com.elca.project.dto.VisitDto;
 import com.elca.project.entity.*;
 import com.elca.project.mapper.VisitorMapper;
 import com.elca.project.repository.CandidateRepository;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.elca.project.service.VisitorService;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

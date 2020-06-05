@@ -69,9 +69,9 @@ public class CandidateServiceImpl implements CandidateService {
 
     }
 
-    public List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName){
+    public List<InterviewDto> getInterviewByCandidateFirstNameAndLastName(String firstName, String lastName) {
         List<Visitor> visitors = (List<Visitor>) visitorRepository.findAll(QVisitor.visitor.firstName.eq(firstName)
-        .and(QVisitor.visitor.lastName.eq(lastName)));
+                .and(QVisitor.visitor.lastName.eq(lastName)));
 
         List<Long> candidates = visitors.stream().map(vst -> {
             Optional<Candidate> cdt = candidateRepository.findOne(QCandidate.candidate.visitor.visitorId.eq(vst.getVisitorId()));
